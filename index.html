@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Eleni Tsouroupi">
+    <meta name="description" content="Search through countries for currency information and many more">
+    <link href="libs/favicon/favicon.ico" rel = "icon">
+    <title>Map</title>
+    
+    <link href="libs/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="libs/css/leaflet.css"/>  
+    <link rel="stylesheet" href="libs/css/flags.css"/>   
+    
+    
+    <link rel="stylesheet" href="libs/css/leaflet.extra-markers.min.css"/> 
+    <link rel="stylesheet" href="libs/fontawesome-free-6.2.1-web/css/fontawesome.min.css"/> 
+    <link rel="stylesheet" href="libs/fontawesome-free-6.2.1-web/css/brands.min.css"/> 
+    <link rel="stylesheet" href="libs/fontawesome-free-6.2.1-web/css/solid.min.css"/> 
+    <link rel="stylesheet" href="libs/css/weather-icons-wind.min.css"/> 
+    <link rel="stylesheet" href="libs/css/weather-icons.min.css"/> 
+    <link rel="stylesheet" href="libs/css/easy-button.css">  
+    <link rel="stylesheet" href="libs/css/MarkerCluster.css">
+    <link rel="stylesheet" href="libs/css/MarkerCluster.Default.css">   
+    <link href="libs/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div id="preloader">
+    <div class="globe"></div>
+</div>
+
+  <div class="main">  
+
+
+    <!-- Map -->
+    <div id="map"></div>
+
+ 
+    <div id="floatingSelect" class="d-flex justify-content-center">           
+      <select id="selectMenu" class="form-select">
+          <option selected>Select Country</option>
+      </select>
+    </div>
+
+    
+
+
+    <!-- Weather Modal -->
+    <div class="modal fade" id="weatherModal" tabindex="-1" aria-labelledby="Weather" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        
+          <div class="container" id="wrapper">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="weatherHeaderCloseButton">x</button>
+            <div class="container-fluid" id="current-weather">
+              
+
+              <div class="row">
+                
+                <!-- Right panel -->
+                <div class="col-md-4 col-sm-5">
+                  <h5><spam id="cityName"></spam></h5>
+                  <h6 id="localDate"></h6>
+                </div>
+                
+                <!-- Center panel -->
+                <div class="col-md-5 col-sm-7">
+                  <div class="row">
+                    <i class="wi" id ="main-icon" style="font-size: 85px;"></i>
+                    <div>
+                      <spam id="mainTemperature"></spam>
+                      <p id="tempDescription"></p>
+                    </div>
+                    <p style="font-size: 1.5rem;"><a href="#" class="active" id="celcius">°C</a> 
+                      <!-- | <a href="#" id="farenheit">°F</a> -->
+                    </p>
+                  </div>
+                </div>
+                
+                <!-- Left panel -->
+                <div class="col-xs-12 col-sm-12 col-md-3 row">
+                  <div class="col-md-12 col-sm-3 col-xs-3 side-weather-info">
+                    <h6>Humidity: <spam id="humidity"></spam>%</h6>
+                  </div>
+                  <div class="col-md-12 col-sm-3 col-xs-3 side-weather-info">
+                    <h6>Wind: <spam id="wind"></spam> m/s</h6>
+                  </div>
+                  <div class="col-md-12 col-sm-3 col-xs-3 side-weather-info">
+                    <h6>Feels Like: <spam id="mainTempHot"></spam>°</h6>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            
+            <!-- 4 days forecast -->
+            <div class="container-fluid">
+              <div class="row">
+                
+                <!-- Day 1 -->
+                <div class="col-md-3 col-sm-6 day-weather-box">
+                  <div class="col-sm-12 day-weather-inner-box">
+                    <div class="col-sm-8 forecast-main">
+                      <p id="forecast-day-1-name"></p>
+                      <div class="row">
+                        <h5 id="forecast-day-1-main">°</h5>
+                        <i class="wi forecast-icon" id="forecast-day-1-icon"></i>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 forecast-min-low">
+                      <p><spam class="high-temperature" id="forecast-day-1-ht"></spam></p>
+                      <p><spam class="low-temperature" id="forecast-day-1-lt"></spam></p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Day 2 -->
+                <div class="col-md-3 col-sm-6 day-weather-box">
+                  <div class="col-sm-12 day-weather-inner-box">
+                    <div class="col-sm-8 forecast-main">
+                      <p id="forecast-day-2-name"></p>
+                      <div class="row">
+                        <h5 id="forecast-day-2-main">°</h5>
+                        <i class="wi forecast-icon" id="forecast-day-2-icon"></i>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 forecast-min-low">
+                      <p><spam class="high-temperature" id="forecast-day-2-ht"></spam></p>
+                      <p><spam class="low-temperature" id="forecast-day-2-lt"></spam></p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Day 3 -->
+                <div class="col-md-3 col-sm-6 day-weather-box">
+                  <div class="col-sm-12 day-weather-inner-box">
+                    <div class="col-sm-8 forecast-main">
+                      <p id="forecast-day-3-name"></p>
+                      <div class="row">
+                        <h5 id="forecast-day-3-main">°</h5>
+                        <i class="wi forecast-icon" id="forecast-day-3-icon"></i>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 forecast-min-low">
+                      <p><spam class="high-temperature" id="forecast-day-3-ht"></spam></p>
+                      <p><spam class="low-temperature" id="forecast-day-3-lt"></spam></p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Day 4 -->
+                <div class="col-md-3 col-sm-6 day-weather-box">
+                  <div class="col-sm-12 day-weather-inner-box">
+                    <div class="col-sm-8 forecast-main">
+                      <p id="forecast-day-4-name"></p>
+                      <div class="row">
+                        <h5 id="forecast-day-4-main">°</h5>
+                        <i class="wi forecast-icon" id="forecast-day-4-icon"></i>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 forecast-min-low">
+                      <p><spam class="high-temperature" id="forecast-day-4-ht"></spam></p>
+                      <p><spam class="low-temperature" id="forecast-day-4-lt"></spam></p>
+                    </div>
+                  </div>
+                </div>                
+              </div>             
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                            -->
+            </div>  
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+      </div>
+    </div>
+    <!-- Weather Modal End -->
+
+   <!-- Info Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="Info" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoTitle">
+          <span id="flags"></span> Country Information
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <i class="fa-regular fa-city"></i>
+            <strong>Capital:</strong>
+            <span id="infoCapital"></span>
+          </div>
+          <div class="col-md-4">
+            <i class="fa-solid fa-person"></i>
+            <strong>Population:</strong>
+            <span id="infoPopulation"></span>
+          </div>
+          <div class="col-md-4">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <strong>Timezone:</strong>
+            <span id="infoTimeZone"></span>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <i class="fa-solid fa-chart-area"></i>
+            <strong>Area:</strong>
+            <span id="infoArea"></span>
+          </div>
+          <div class="col-md-8">
+            <i class="fa-brands fa-wikipedia-w"></i>
+            <strong>Wikipedia Links:</strong>
+            <div id="modalWikipedia">
+              <a id="modalwikipediaLink1" href="" target="_blank">
+                <img id="modalwikipediaImage1" class="modalWikipediaImage" src="" alt="">
+              </a>
+              <a id="modalwikipediaLink2" href="" target="_blank">
+                <img id="modalwikipediaImage2" class="modalWikipediaImage" src="" alt="">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Info Modal End -->
+
+
+     <!-- Currency Exchange Rate Modal -->
+     <div class="modal fade" id="currencyModal" tabindex="-1" aria-labelledby="Currency" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content" id="currencyModalContent">
+          <div class="modal-header d-flex justify-content-start" >
+            <i class="fa-solid fa-coins"></i>
+            <h5 class="modal-title">Live Exchange Rate Info</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body">
+            <table class="table" id="currencyTable">
+              <thead>
+                <tr>
+                  <th>Country's Currency</th>
+                  <th>Exchange Rate USD</th>                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>               
+                  <td id="currencyCurrent"></td>
+                  <td id="currencyUSDExchange"></td>
+                  </tr>                 
+              </tbody>
+            </table> 
+  
+            <div class="container">
+             
+                <button class="btn btn-dark" data-toggle="collapse" href="#collapseCurrencyTable" type="button" aria-expanded="false" aria-controls="collapseExample">Show more Exchange Rates with USD Base</button>   
+                    <div class="collapse" id="collapseCurrencyTable">
+                      <div class="card card-body">
+                        
+                        <table class="table" id="allCurrenciesTableAll">
+                          <thead>
+                            <tr>
+                              <th>Currency</th>
+                              <th>Exchange Rate USD base</th>                      
+                            </tr>
+                          </thead>
+                          <tbody id="allCurrenciesTable">
+                        
+                          </tbody>
+                        </table> 
+                      </div>
+                    </div>
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+          </div>
+       </div>          
+    </div>
+    <!-- Currency Exchange Rate Modal End -->
+
+    <!-- News Modal -->
+    <div class="modal fade" id="NewsModal" tabindex="-1" aria-labelledby="NewsModalLabel" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header modal-header d-flex justify-content-start" id="newsModalHeader">     
+              <i class="fa-solid fa-rss"></i>
+              <h5 class="modal-title fs-5" id="NewsModalLabel"></h5>   
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-borderless" id="newsModalTableAll">
+              <tbody id="newsModalTable">              
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- News Modal End -->
+
+  <script src="libs/js/leaflet.js"></script>
+  <script src="libs/js/leaflet-providers.js"></script>
+  <script src="libs/js/jquery-2.2.3.min.js"></script>
+  <script src="libs/css/bootstrap/js/bootstrap.min.js"></script>
+  <script src="libs/js/easy-button.js"></script>
+  <script src="libs/js/leaflet.extra-markers.js"></script> 
+  <script src="libs/js/leaflet.markercluster.js"></script>
+  <script src="libs/js/script.js"></script>
+   
+</body>
+</html>
