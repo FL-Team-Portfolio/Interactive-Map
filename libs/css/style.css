@@ -1,0 +1,202 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: rgb(236, 245, 236);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.globe {
+  width: 100px;
+  height: 100px;
+  background-image: url('../img/globePreloader.png');
+  background-size: cover;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+body.loaded #preloader {
+  display: none;
+}
+
+body.loaded .content {
+  display: block;
+}
+
+
+
+#map {  
+  height: 100vh;
+ 
+}
+
+#floatingSelect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 400;
+  width: 100%;
+ 
+}
+
+.form-select {
+  border-radius: 10px; 
+  padding: 5px 12px;
+  border: none;
+}
+
+
+#selectMenu{margin-top: 10px;}
+
+#flags { 
+  position: absolute;
+  top: 23px;  
+}
+
+#infoTitle {margin-left: 20px;;}
+
+.modalWikipediaImage {
+    border: 1px solid #ddd; 
+    border-radius: 4px; 
+    padding: 5px; 
+    width: 100px;
+}
+
+
+.modalWikipediaImage:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+a {
+  color: white;
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+a:hover, a:active, a:focus{
+  color: white;
+  text-decoration: none;
+  opacity: 1;
+}
+
+.active {
+  color: white;
+  text-decoration: none;
+  opacity: 1;
+}
+
+#wrapper {
+  background-color: #28688C;
+  box-shadow: 1px 5px 25px 3px #444;
+  border-radius: 10px;
+  margin: 100px auto;
+  max-width: 720px;
+  padding: 0px;
+  color: white;  
+}
+
+#current-weather{
+  padding: 15px;
+}
+
+#mainTemperature{
+  font-size: 5.5em; 
+  line-height: 0.7;
+}
+
+#tempDescription {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.day-weather-box {
+  border: 1px solid #28688C;
+  background-color: #2E7FA1;
+  border-radius: 5px;
+  height: 5em;
+}
+
+.day-weather-box p{
+  margin-bottom: 0;
+}
+
+.side-weather-info {
+  padding: 0px 10px;
+}
+
+.day-weather-inner-box {
+  display: inline-flex;
+  margin: 14px auto;
+  padding: 0px 5px;
+}
+
+.forecast-main {
+  padding: 0px 0px 0px 30px;
+}
+
+#forecast-day-1-icon {
+  font-size: 25px;
+  margin-left: 5px;
+}
+
+#forecast-day-2-icon {
+  font-size: 25px;
+  margin-left: 5px;
+}
+
+#forecast-day-3-icon {
+  font-size: 25px;
+  margin-left: 5px;
+}
+
+#forecast-day-4-icon {
+  font-size: 25px;
+  margin-left: 5px;
+}
+
+.modal-body p{
+  color: #333;
+}
+
+
+/* #currencyModalContent{
+  background-color: rgb(165, 116, 52);
+  color: black;
+}
+
+#currencyTable {color: black;} */
+
+
+.fa-rss {color: #2E7FA1;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+
+#dataPublisherNews{
+  color: rgb(110, 107, 107);
+  font-size: small;
+ 
+}
+
+#articleLink{color: #2E7FA1}
+
+#weatherHeaderCloseButton{margin-right: 10px;}
+
